@@ -1,4 +1,5 @@
-# code for work
+ code for work
+ =====
 
 为找工作练手，其中包括leetcode上的习题解答，采用c/c++语言和python语言编写。
 
