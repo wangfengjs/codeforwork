@@ -118,23 +118,70 @@ void quickSort(int *a, int lo, int hi)
 	}
 }
 
+// 堆排序 - 不稳定
+template<typename T>
+void HeapAdjust(T *A, int start, int end)
+{
+	/* 写法1
+	T temp = A[start];
+	for (int i=2*start+1; i<=end; i=2*i+1)
+	{
+		if (i<end && A[i] < A[i+1])
+		{
+			++i;
+		}
+		if (temp > A[i])
+		{
+			break;
+		}
+
+		A[start] = A[i];
+		start = i;
+	}
+
+	A[start] = temp;
+	*/
+
+	// 写法2
+	int c;
+	for (int i=start; (c=2*i+1) <=end; i=c)
+	{
+		if (c < end && A[c+1] > A[c])
+		{
+			++c;
+		}
+		if (A[i] >= A[c])
+		{
+			break;
+		}
+		swap(A[i], A[c]);
+	}
+}
+
+template<typename T>
+void HeapSort(T *A, int n)
+{
+	// 先建立大顶堆
+	for (int i=(n-2)/2; i>=0; i--)
+	{
+		HeapAdjust(A, i, n-1);
+	}
+
+	// 进行排序
+	for (int i=n-1; i>0; i--)
+	{
+		swap(A[i], A[0]);
+		HeapAdjust(A, 0, i-1);
+	}
+}
 
 int main(int argc, char **argv)
 {
-	float sum = 0;
-	for (int i=0; i<40; i++)
-	{
-		float r = 1.0*i/39;
-		cout << pow(1-r, 2) << endl;
-		sum += (1-r)*(1-r);
-	}
 
-	cout << sum*40 << endl;
+	int a[] = {1, 3, 5, 2, 80};
+	HeapSort(a, 5);
 
-	int a[] = {1, 3, 5, 2};
-	insertSort(a, 4);
-
-	for (int i=0; i<4; i++)
+	for (int i=0; i<5; i++)
 	{
 		cout << a[i] << " ";
 	}
